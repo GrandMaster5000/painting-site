@@ -16,7 +16,7 @@ function workTabs(tabsCoverSelector, contentSelector, notElemSelector) {
                     item.classList.remove('active');
                 }
             });
-
+            
             target.classList.add('active');
             contents.forEach(item => {
                hideElem(item);
