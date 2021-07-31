@@ -1,6 +1,7 @@
 'use strict';
 import removeElemTrigger from "./removeElemTrigger";
 import calcScroll from "./calcScroll";
+import checkedOpenModal from './chekedOpenModal';
 
 
 function workModal(triggerSelector , modalSelector, closeSelector, closeClickOverlay = true, isRemoveTrigger = false) {
@@ -8,6 +9,20 @@ function workModal(triggerSelector , modalSelector, closeSelector, closeClickOve
           modal = document.querySelector(modalSelector),
           close = document.querySelector(closeSelector),
           scrollWindow = calcScroll();
+
+
+    if(modalSelector == '.popup-consultation') {
+        showModalByTime(modal, 5000);
+    }
+
+    function showModalByTime(modal, time) {
+        setTimeout(() => {
+            if(!checkedOpenModal('[data-modal]')) {
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            }
+        }, time);
+    }
 
     function openModal(trigger, modal, scrollWindow) {
        trigger.forEach(item => {

@@ -1777,6 +1777,36 @@ function calcScroll() {
 
 /***/ }),
 
+/***/ "./src/js/modules/chekedOpenModal.js":
+/*!*******************************************!*\
+  !*** ./src/js/modules/chekedOpenModal.js ***!
+  \*******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__);
+
+
+
+
+function checkedOpenModal(modalsSelector) {
+  var modals = document.querySelectorAll(modalsSelector);
+  var boolean = false;
+  modals.forEach(function (item) {
+    if (getComputedStyle(item).display == 'block') {
+      boolean = true;
+    }
+  });
+  return boolean;
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (checkedOpenModal);
+
+/***/ }),
+
 /***/ "./src/js/modules/hover.js":
 /*!*********************************!*\
   !*** ./src/js/modules/hover.js ***!
@@ -1838,6 +1868,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _removeElemTrigger__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./removeElemTrigger */ "./src/js/modules/removeElemTrigger.js");
 /* harmony import */ var _calcScroll__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./calcScroll */ "./src/js/modules/calcScroll.js");
+/* harmony import */ var _chekedOpenModal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./chekedOpenModal */ "./src/js/modules/chekedOpenModal.js");
+
 
 
 
@@ -1851,6 +1883,19 @@ function workModal(triggerSelector, modalSelector, closeSelector) {
       modal = document.querySelector(modalSelector),
       close = document.querySelector(closeSelector),
       scrollWindow = Object(_calcScroll__WEBPACK_IMPORTED_MODULE_2__["default"])();
+
+  if (modalSelector == '.popup-consultation') {
+    showModalByTime(modal, 5000);
+  }
+
+  function showModalByTime(modal, time) {
+    setTimeout(function () {
+      if (!Object(_chekedOpenModal__WEBPACK_IMPORTED_MODULE_3__["default"])('[data-modal]')) {
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+      }
+    }, time);
+  }
 
   function openModal(trigger, modal, scrollWindow) {
     trigger.forEach(function (item) {
