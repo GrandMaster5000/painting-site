@@ -10,6 +10,7 @@ function loadPaitingStyles(triggerSelector, stylesContainerSelector) {
         removeElemTrigger(trigger, true);
         styles.forEach(item => {
             if(item.classList.contains('hidden-lg')) {
+                item.classList.add('animate__animated', 'animate__fadeIn');
                 item.classList.remove('hidden-lg', 'hidden-md', 'hidden-sm', 'hidden-xs', 'styles-2');
                 item.classList.add('col-sm-3', 'col-sm-offset-0', 'col-xs-10', 'col-xs-offset-1');
             }

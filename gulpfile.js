@@ -17,7 +17,7 @@ gulp.task('html', function() {
 });
 
 gulp.task('styles', function () {
-  return gulp.src(['./src/assets/css/main.css', './node_modules/animate.css/animate.min.css'])
+  return gulp.src(['./src/assets/css/main.css', './node_modules/animate.css/animate.min.css', './node_modules/swiper/swiper-bundle.min.css'])
   .pipe(cssmin())
   .pipe(concatCss('main.css'))
     .pipe(gulp.dest('dist/assets/css/'));

@@ -371,6 +371,10 @@ h4 {
 .main-slider-btn img {
   width: 100%;
 }
+.main-slider{
+  height: 669px;
+    overflow: hidden;
+}
 .main-prev-btn {
   left: 0;
 }
@@ -849,6 +853,9 @@ h4 {
   bottom: -3rem;
   left: 15rem;
   z-index: 19;
+}
+.feedback-slider {
+  overflow: hidden;
 }
 .feedback-block .button-order:before {
   content: '';
@@ -1727,4 +1734,3 @@ h4 {
   }
 }
 
-@import '../../../node_modules/@animate.css/animate.min.css';

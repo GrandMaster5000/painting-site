@@ -6,8 +6,9 @@ function workAccordion(triggerSelector, contentSelector, activeTriggerClass, act
 
     contents.forEach(item => {
         item.style.display = 'none';
-        item.style.transition = '.5s all';
-        item.style.opacity = '0';
+        // item.style.transition = '.5s all';
+        // item.style.opacity = '0';
+       
     });
 
     
@@ -29,15 +30,19 @@ function workAccordion(triggerSelector, contentSelector, activeTriggerClass, act
         
 
         content.style.display = 'block';
-        setTimeout(() => {content.style.opacity = '1';}, 5);
+        content.classList.add('animate__animated', 'animate__fadeIn');
+        content.classList.remove('animate__fadeOut');
         content.classList.add(activeContentClass);
     }
 
     function disableContent(trigger, content) {
         trigger.classList.remove(activeTriggerClass);
 
-        setTimeout(() => {content.style.display = 'none';}, 150);
-        content.style.opacity = '0';
+        content.classList.remove('animate__fadeIn');
+        content.classList.add('animate__fadeOut');
+        content.addEventListener('animationend', () => {
+            content.style.display = 'none';
+        });
         content.classList.remove(activeContentClass);
     }
 }

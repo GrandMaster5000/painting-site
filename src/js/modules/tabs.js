@@ -8,6 +8,10 @@ function workTabs(tabsCoverSelector, contentSelector, notElemSelector) {
 
     let counter = 0;
 
+    contents.forEach(item => {
+        item.classList.add('animate__animated', 'animate__fadeIn');
+    });
+
     tabsCover.addEventListener('click', e => {
         let target = e.target;
         if(target && target.tagName == 'LI') {
