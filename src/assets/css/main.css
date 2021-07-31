@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Playfair+Display:700i&subset=cyrillic');
-@import url('../../../node_modules/animate.css/animate');
+
 @font-face {
   font-family: 'Circe Light';
   src: url('../fonts/Circe-Light.eot');
@@ -1726,3 +1726,5 @@ h4 {
     width: 25rem;
   }
 }
+
+@import '../../../node_modules/@animate.css/animate.min.css';

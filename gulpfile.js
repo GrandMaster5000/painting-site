@@ -17,10 +17,17 @@ gulp.task('html', function() {
 });
 
 gulp.task('styles', function () {
-  return gulp.src('./src/assets/css/*.css')
-    .pipe(cssmin())
+  return gulp.src(['./src/assets/css/main.css', './node_modules/animate.css/animate.min.css'])
+  .pipe(cssmin())
+  .pipe(concatCss('main.css'))
     .pipe(gulp.dest('dist/assets/css/'));
  });
+
+gulp.task('bootstrap', () => {
+    return gulp.src('./src/assets/css/bootstrap.css')
+    .pipe(cssmin())
+    .pipe(gulp.dest('dist/assets/css/'));
+});
 
 gulp.task("build-js", () => {
     return gulp.src("./src/js/main.js")
@@ -88,7 +95,7 @@ gulp.task('images', function() {
       .pipe(browsersync.stream());
 });
 
-gulp.task("build", gulp.parallel("html",  "build-js", 'fonts', 'images', 'styles', 'server'));
+gulp.task("build", gulp.parallel("html",  "build-js", 'fonts', 'images', 'styles', 'server', 'bootstrap'));
 
 gulp.task("build-prod-js", () => {
     return gulp.src("./src/js/main.js")
