@@ -1674,6 +1674,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_tabs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/tabs */ "./src/js/modules/tabs.js");
 /* harmony import */ var _modules_hover__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/hover */ "./src/js/modules/hover.js");
 /* harmony import */ var _modules_accordion__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/accordion */ "./src/js/modules/accordion.js");
+/* harmony import */ var _modules_menu__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/menu */ "./src/js/modules/menu.js");
+
 
 
 
@@ -1689,6 +1691,7 @@ document.addEventListener("DOMContentLoaded", function () {
   Object(_modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])('.portfolio-menu', '.portfolio-block', '.portfolio-no');
   Object(_modules_hover__WEBPACK_IMPORTED_MODULE_3__["default"])('.sizes-block', 'not-hide');
   Object(_modules_accordion__WEBPACK_IMPORTED_MODULE_4__["default"])('.accordion-heading', '.accordion-block', 'ui-accordion-header-active', 'ui-accordion-content-active');
+  Object(_modules_menu__WEBPACK_IMPORTED_MODULE_5__["default"])('.burger', '.burger-menu');
 });
 
 /***/ }),
@@ -1855,6 +1858,47 @@ function workHover(wrapperContentSelector, notHideElemClass) {
 
 /***/ }),
 
+/***/ "./src/js/modules/menu.js":
+/*!********************************!*\
+  !*** ./src/js/modules/menu.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+
+
+function workMenu(hambergerSelector, menuSelector) {
+  var hamburger = document.querySelector(hambergerSelector),
+      menu = document.querySelector(menuSelector);
+
+  function openMenu(menu) {
+    menu.style.display = 'block';
+  }
+
+  function closeMenu(menu) {
+    menu.style.display = 'none';
+  }
+
+  hamburger.addEventListener('click', function () {
+    if (document.documentElement.clientWidth <= 992 && getComputedStyle(menu).display == 'none') {
+      openMenu(menu);
+    } else if (getComputedStyle(menu).display == 'block') {
+      closeMenu(menu);
+    }
+  });
+  window.addEventListener('resize', function () {
+    if (document.documentElement.clientWidth > 992) {
+      closeMenu(menu);
+    }
+  });
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (workMenu);
+
+/***/ }),
+
 /***/ "./src/js/modules/modal.js":
 /*!*********************************!*\
   !*** ./src/js/modules/modal.js ***!
@@ -1885,7 +1929,7 @@ function workModal(triggerSelector, modalSelector, closeSelector) {
       scrollWindow = Object(_calcScroll__WEBPACK_IMPORTED_MODULE_2__["default"])();
 
   if (modalSelector == '.popup-consultation') {
-    showModalByTime(modal, 5000);
+    showModalByTime(modal, 60000);
   }
 
   function showModalByTime(modal, time) {

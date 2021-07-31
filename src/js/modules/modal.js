@@ -12,7 +12,7 @@ function workModal(triggerSelector , modalSelector, closeSelector, closeClickOve
 
 
     if(modalSelector == '.popup-consultation') {
-        showModalByTime(modal, 5000);
+        showModalByTime(modal, 60000);
     }
 
     function showModalByTime(modal, time) {
