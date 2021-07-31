@@ -3,6 +3,7 @@ import workModal from './modules/modal';
 import loadPaitingStyles from './modules/showContent';
 import tabs from './modules/tabs';
 import workHover from './modules/hover';
+import workAccordion from './modules/accordion';
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -13,4 +14,5 @@ document.addEventListener("DOMContentLoaded", () => {
     loadPaitingStyles('.button-styles', '#styles .row');
     tabs('.portfolio-menu', '.portfolio-block', '.portfolio-no');
     workHover('.sizes-block', 'not-hide');
+    workAccordion('.accordion-heading', '.accordion-block', 'ui-accordion-header-active', 'ui-accordion-content-active');
 });
