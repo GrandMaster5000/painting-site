@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "animate.css": "^4.1.1",
-    "swiper": "^6.8.0"
+    "swiper": "^6.8.0",
+    "wowjs": "^1.1.3"
   }
 }

@@ -6,6 +6,10 @@ import workHover from './modules/hover';
 import workAccordion from './modules/accordion';
 import workMenu from './modules/menu';
 import Swiper from 'swiper/bundle';
+import WOW from 'wowjs/dist/wow.min';
+import forms from './modules/forms';
+import mask from './modules/mask';
+
 
 
 
@@ -17,6 +21,8 @@ document.addEventListener("DOMContentLoaded", () => {
     workHover('.sizes-block', 'not-hide');
     workAccordion('.accordion-heading', '.accordion-block', 'ui-accordion-header-active', 'ui-accordion-content-active');
     workMenu('.burger', '.burger-menu');
+    forms();
+    mask('[name="phone"]');
    
     const mainSwiper = new Swiper( '.main-slider', {
         direction: 'vertical',
@@ -39,11 +45,6 @@ document.addEventListener("DOMContentLoaded", () => {
         prevEl: '.main-prev-btn',
     },
   });
-  
 
-
- 
-
-  
-   
+  new WOW.WOW().init();
 });

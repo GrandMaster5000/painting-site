@@ -77,7 +77,7 @@ gulp.task("watch", () => {
 });
 
 gulp.task('server', function() {
-  return gulp.src("src/assets/server.php")
+  return gulp.src("src/assets/*.php")
       .pipe(gulp.dest("dist/assets"))
       .pipe(browsersync.stream());
 });
