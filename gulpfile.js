@@ -32,7 +32,7 @@ gulp.task('bootstrap', () => {
 gulp.task("build-js", () => {
     return gulp.src("./src/js/main.js")
                 .pipe(webpack({
-                    mode: 'development',
+                    mode: 'production',
                     output: {
                         filename: 'script.js'
                     },
