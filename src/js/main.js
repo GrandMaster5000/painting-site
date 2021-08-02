@@ -10,22 +10,24 @@ import WOW from 'wowjs/dist/wow.min';
 import forms from './modules/forms';
 import mask from './modules/mask';
 import checkTextInputs from './modules/checkTextInputs';
+import calc from './modules/calc';
 
 
 
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    modal();
+    modal('.calc-form');
     loadPaitingStyles('.button-styles', '#styles .row');
     tabs('.portfolio-menu', '.portfolio-block', '.portfolio-no');
     workHover('.sizes-block', 'not-hide');
     workAccordion('.accordion-heading', '.accordion-block', 'ui-accordion-header-active', 'ui-accordion-content-active');
     workMenu('.burger', '.burger-menu');
-    forms();
+    forms('.calc-form');
     mask('[name="phone"]');
     checkTextInputs('[name="name"]');
     checkTextInputs('[name="message"]');
+    calc('#size', '#material', '#options', '.promocode', '.calc-price');
    
     const mainSwiper = new Swiper( '.main-slider', {
         direction: 'vertical',

@@ -1,8 +1,9 @@
 'use strict';
 
-const forms = () => {
+const forms = (exceptionSelector) => {
     const form = document.querySelectorAll('form'),
-          upload = document.querySelectorAll('[name="upload"]');
+          upload = document.querySelectorAll('[name="upload"]'),
+          exception = document.querySelector(exceptionSelector);
 
     const message = {
         loading: 'Загрузка...',
@@ -51,54 +52,56 @@ const forms = () => {
     form.forEach(item => {
         item.addEventListener('submit', e =>{
             e.preventDefault();
+            
+            if(item != exception) {
+                let statusMessage = document.createElement('div');
+                statusMessage.classList.add('status');
+                item.parentNode.appendChild(statusMessage);
 
-            let statusMessage = document.createElement('div');
-            statusMessage.classList.add('status');
-            item.parentNode.appendChild(statusMessage);
+                statusMessage.style.display = 'flex';
+                statusMessage.style.flexDirection = 'column';
+                statusMessage.style.justifyContent = 'center';
+                statusMessage.style.alignItems = 'center';
 
-            statusMessage.style.display = 'flex';
-            statusMessage.style.flexDirection = 'column';
-            statusMessage.style.justifyContent = 'center';
-            statusMessage.style.alignItems = 'center';
+                item.classList.add('animate__animated', 'animate__fadeOutUp');
+                setTimeout(() => {
+                    item.style.display = 'none';
+                }, 400);
 
-            item.classList.add('animate__animated', 'animate__fadeOutUp');
-            setTimeout(() => {
-                item.style.display = 'none';
-            }, 400);
+                let statusImg = document.createElement('img');
+                statusImg.setAttribute('src', message.spinner);
+                statusImg.classList.add('animate__animated', 'animate__fadeInUp');
+                statusMessage.appendChild(statusImg);
 
-            let statusImg = document.createElement('img');
-            statusImg.setAttribute('src', message.spinner);
-            statusImg.classList.add('animate__animated', 'animate__fadeInUp');
-            statusMessage.appendChild(statusImg);
+                let textMessage = document.createElement('div');
+                textMessage.textContent = message.loading;
+                statusMessage.appendChild(textMessage);
 
-            let textMessage = document.createElement('div');
-            textMessage.textContent = message.loading;
-            statusMessage.appendChild(textMessage);
+                const formData = new FormData(item);
+                let api;
 
-            const formData = new FormData(item);
-            let api;
+                item.closest('.popup-design') || item.classList.contains('calc-form') ? api = path.designer : api = path.question;
 
-            item.closest('.popup-design') || item.classList.contains('calc-form') ? api = path.designer : api = path.question;
-
-            postData(api, formData)
-                .then(res => {
-                    console.log(res);
-                    statusImg.setAttribute('src', message.ok);
-                    textMessage.textContent = message.success;
-                })
-                .catch(() => {
-                    textMessage.textContent = message.failure;
-                    statusImg.setAttribute('src', message.fail);
-                })
-                .finally(() => {
-                    clearInputs();
-                    setTimeout(() => {
-                        statusMessage.remove();  
-                        item.style.display = 'block';
-                        item.classList.remove('animate__fadeOutUp');
-                        item.classList.add('animate__fadeIn');
-                    }, 5000);
-                });
+                postData(api, formData)
+                    .then(res => {
+                        console.log(res);
+                        statusImg.setAttribute('src', message.ok);
+                        textMessage.textContent = message.success;
+                    })
+                    .catch(() => {
+                        textMessage.textContent = message.failure;
+                        statusImg.setAttribute('src', message.fail);
+                    })
+                    .finally(() => {
+                        clearInputs();
+                        setTimeout(() => {
+                            statusMessage.remove();  
+                            item.style.display = 'block';
+                            item.classList.remove('animate__fadeOutUp');
+                            item.classList.add('animate__fadeIn');
+                        }, 5000);
+                    });
+            }
         });
     });
 };

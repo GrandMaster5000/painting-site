@@ -16416,6 +16416,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_forms__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/forms */ "./src/js/modules/forms.js");
 /* harmony import */ var _modules_mask__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/mask */ "./src/js/modules/mask.js");
 /* harmony import */ var _modules_checkTextInputs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./modules/checkTextInputs */ "./src/js/modules/checkTextInputs.js");
+/* harmony import */ var _modules_calc__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./modules/calc */ "./src/js/modules/calc.js");
+
 
 
 
@@ -16430,16 +16432,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 document.addEventListener("DOMContentLoaded", function () {
-  Object(_modules_modal__WEBPACK_IMPORTED_MODULE_0__["default"])();
+  Object(_modules_modal__WEBPACK_IMPORTED_MODULE_0__["default"])('.calc-form');
   Object(_modules_showContent__WEBPACK_IMPORTED_MODULE_1__["default"])('.button-styles', '#styles .row');
   Object(_modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])('.portfolio-menu', '.portfolio-block', '.portfolio-no');
   Object(_modules_hover__WEBPACK_IMPORTED_MODULE_3__["default"])('.sizes-block', 'not-hide');
   Object(_modules_accordion__WEBPACK_IMPORTED_MODULE_4__["default"])('.accordion-heading', '.accordion-block', 'ui-accordion-header-active', 'ui-accordion-content-active');
   Object(_modules_menu__WEBPACK_IMPORTED_MODULE_5__["default"])('.burger', '.burger-menu');
-  Object(_modules_forms__WEBPACK_IMPORTED_MODULE_8__["default"])();
+  Object(_modules_forms__WEBPACK_IMPORTED_MODULE_8__["default"])('.calc-form');
   Object(_modules_mask__WEBPACK_IMPORTED_MODULE_9__["default"])('[name="phone"]');
   Object(_modules_checkTextInputs__WEBPACK_IMPORTED_MODULE_10__["default"])('[name="name"]');
   Object(_modules_checkTextInputs__WEBPACK_IMPORTED_MODULE_10__["default"])('[name="message"]');
+  Object(_modules_calc__WEBPACK_IMPORTED_MODULE_11__["default"])('#size', '#material', '#options', '.promocode', '.calc-price');
   var mainSwiper = new swiper_bundle__WEBPACK_IMPORTED_MODULE_6__["default"]('.main-slider', {
     direction: 'vertical',
     loop: true,
@@ -16521,6 +16524,47 @@ function workAccordion(triggerSelector, contentSelector, activeTriggerClass, act
 
 /***/ }),
 
+/***/ "./src/js/modules/calc.js":
+/*!********************************!*\
+  !*** ./src/js/modules/calc.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+
+
+var calc = function calc(size, material, options, promocode, result) {
+  var sizeBlock = document.querySelector(size),
+      materialBlock = document.querySelector(material),
+      optionsBlock = document.querySelector(options),
+      promocodeBlock = document.querySelector(promocode),
+      resultBlock = document.querySelector(result);
+  var sum = 0;
+
+  function calcFunction() {
+    sum = Math.round(+sizeBlock.value * +materialBlock.value + +optionsBlock.value);
+
+    if (sizeBlock.value == '' || materialBlock.value == '') {
+      resultBlock.textContent = 'Пожалуста, выберите размер и материал картины';
+    } else if (promocodeBlock.value == 'IWANTPOPART') {
+      resultBlock.textContent = Math.round(sum * 0.7);
+    } else {
+      resultBlock.textContent = sum;
+    }
+  }
+
+  sizeBlock.addEventListener('change', calcFunction);
+  materialBlock.addEventListener('change', calcFunction);
+  optionsBlock.addEventListener('change', calcFunction);
+  promocodeBlock.addEventListener('input', calcFunction);
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (calc);
+
+/***/ }),
+
 /***/ "./src/js/modules/checkTextInputs.js":
 /*!*******************************************!*\
   !*** ./src/js/modules/checkTextInputs.js ***!
@@ -16593,9 +16637,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var forms = function forms() {
+var forms = function forms(exceptionSelector) {
   var form = document.querySelectorAll('form'),
-      upload = document.querySelectorAll('[name="upload"]');
+      upload = document.querySelectorAll('[name="upload"]'),
+      exception = document.querySelector(exceptionSelector);
   var message = {
     loading: 'Загрузка...',
     success: 'Спасибо! Скоро мы с вами свяжемся',
@@ -16659,43 +16704,46 @@ var forms = function forms() {
   form.forEach(function (item) {
     item.addEventListener('submit', function (e) {
       e.preventDefault();
-      var statusMessage = document.createElement('div');
-      statusMessage.classList.add('status');
-      item.parentNode.appendChild(statusMessage);
-      statusMessage.style.display = 'flex';
-      statusMessage.style.flexDirection = 'column';
-      statusMessage.style.justifyContent = 'center';
-      statusMessage.style.alignItems = 'center';
-      item.classList.add('animate__animated', 'animate__fadeOutUp');
-      setTimeout(function () {
-        item.style.display = 'none';
-      }, 400);
-      var statusImg = document.createElement('img');
-      statusImg.setAttribute('src', message.spinner);
-      statusImg.classList.add('animate__animated', 'animate__fadeInUp');
-      statusMessage.appendChild(statusImg);
-      var textMessage = document.createElement('div');
-      textMessage.textContent = message.loading;
-      statusMessage.appendChild(textMessage);
-      var formData = new FormData(item);
-      var api;
-      item.closest('.popup-design') || item.classList.contains('calc-form') ? api = path.designer : api = path.question;
-      postData(api, formData).then(function (res) {
-        console.log(res);
-        statusImg.setAttribute('src', message.ok);
-        textMessage.textContent = message.success;
-      }).catch(function () {
-        textMessage.textContent = message.failure;
-        statusImg.setAttribute('src', message.fail);
-      }).finally(function () {
-        clearInputs();
+
+      if (item != exception) {
+        var statusMessage = document.createElement('div');
+        statusMessage.classList.add('status');
+        item.parentNode.appendChild(statusMessage);
+        statusMessage.style.display = 'flex';
+        statusMessage.style.flexDirection = 'column';
+        statusMessage.style.justifyContent = 'center';
+        statusMessage.style.alignItems = 'center';
+        item.classList.add('animate__animated', 'animate__fadeOutUp');
         setTimeout(function () {
-          statusMessage.remove();
-          item.style.display = 'block';
-          item.classList.remove('animate__fadeOutUp');
-          item.classList.add('animate__fadeIn');
-        }, 5000);
-      });
+          item.style.display = 'none';
+        }, 400);
+        var statusImg = document.createElement('img');
+        statusImg.setAttribute('src', message.spinner);
+        statusImg.classList.add('animate__animated', 'animate__fadeInUp');
+        statusMessage.appendChild(statusImg);
+        var textMessage = document.createElement('div');
+        textMessage.textContent = message.loading;
+        statusMessage.appendChild(textMessage);
+        var formData = new FormData(item);
+        var api;
+        item.closest('.popup-design') || item.classList.contains('calc-form') ? api = path.designer : api = path.question;
+        postData(api, formData).then(function (res) {
+          console.log(res);
+          statusImg.setAttribute('src', message.ok);
+          textMessage.textContent = message.success;
+        }).catch(function () {
+          textMessage.textContent = message.failure;
+          statusImg.setAttribute('src', message.fail);
+        }).finally(function () {
+          clearInputs();
+          setTimeout(function () {
+            statusMessage.remove();
+            item.style.display = 'block';
+            item.classList.remove('animate__fadeOutUp');
+            item.classList.add('animate__fadeIn');
+          }, 5000);
+        });
+      }
     });
   });
 };
@@ -16878,16 +16926,20 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var modal = function modal() {
+var modal = function modal(exceptionSelector) {
   var isOpenModal = false;
-  var allModals = document.querySelectorAll('[data-modal]');
+  var allModals = document.querySelectorAll('[data-modal]'),
+      exception = document.querySelector(exceptionSelector);
   allModals.forEach(function (modal) {
-    modal.classList.add('animate__animated', 'animate__fadeIn');
+    if (modal != exception) {
+      modal.classList.add('animate__animated', 'animate__fadeIn');
+    }
   });
 
   function workModal(triggerSelector, modalSelector, closeSelector) {
     var closeClickOverlay = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
     var isRemoveTrigger = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;
+    var exception = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : false;
     var trigger = document.querySelectorAll(triggerSelector),
         modal = document.querySelector(modalSelector),
         close = document.querySelector(closeSelector),
@@ -16907,15 +16959,26 @@ var modal = function modal() {
       }, time);
     }
 
-    function openModal(trigger, modal, scrollWindow) {
-      trigger.forEach(function (item) {
-        item.addEventListener('click', function () {
-          modal.style.display = 'block';
-          document.body.style.overflow = 'hidden';
-          document.body.style.marginRight = "".concat(scrollWindow, "px");
-          isOpenModal = true;
+    function openModal(trigger, modal, scrollWindow, exception) {
+      if (exception) {
+        exception.querySelector('.button-order').addEventListener('click', function (e) {
+          if (document.querySelector('#size').value != '' && document.querySelector('#material').value != '') {
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            document.body.style.marginRight = "".concat(scrollWindow, "px");
+            isOpenModal = true;
+          }
         });
-      });
+      } else {
+        trigger.forEach(function (item) {
+          item.addEventListener('click', function () {
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            document.body.style.marginRight = "".concat(scrollWindow, "px");
+            isOpenModal = true;
+          });
+        });
+      }
     }
 
     function closeModal(closeTrigger, modal, trigger) {
@@ -16943,7 +17006,7 @@ var modal = function modal() {
       });
     }
 
-    openModal(trigger, modal, scrollWindow);
+    openModal(trigger, modal, scrollWindow, exception);
     closeModal(close, modal, trigger);
   }
 
@@ -16984,6 +17047,7 @@ var modal = function modal() {
   workModal('.button-design', '.popup-design', '.popup-design .popup-close');
   workModal('.button-consultation', '.popup-consultation', '.popup-consultation .popup-close');
   workModal('.fixed-gift', '.popup-gift', '.popup-gift .popup-close', true, true);
+  workModal('.calc-form .button-order', '.popup-design ', '.popup-design  .popup-close', true, false, exception);
   showModalByScroll('.fixed-gift');
 };
 

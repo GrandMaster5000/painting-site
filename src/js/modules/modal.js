@@ -2,17 +2,20 @@
 import removeElemTrigger from "./removeElemTrigger";
 
 
-const modal = () => {
+const modal = (exceptionSelector) => {
 
     let isOpenModal = false;
 
-    const allModals = document.querySelectorAll('[data-modal]');
+    const allModals = document.querySelectorAll('[data-modal]'),
+            exception = document.querySelector(exceptionSelector);
 
     allModals.forEach(modal => {
-        modal.classList.add('animate__animated', 'animate__fadeIn');
+        if(modal != exception) {
+            modal.classList.add('animate__animated', 'animate__fadeIn');
+        }
     });
 
-    function workModal(triggerSelector , modalSelector, closeSelector, closeClickOverlay = true, isRemoveTrigger = false) {
+    function workModal(triggerSelector , modalSelector, closeSelector, closeClickOverlay = true, isRemoveTrigger = false, exception = false) {
         const trigger = document.querySelectorAll(triggerSelector),
               modal = document.querySelector(modalSelector),
               close = document.querySelector(closeSelector),
@@ -32,16 +35,27 @@ const modal = () => {
                 }
             }, time);
         }
-    
-        function openModal(trigger, modal, scrollWindow) {
-           trigger.forEach(item => {
-                item.addEventListener('click', () => {
-                    modal.style.display = 'block';
-                    document.body.style.overflow = 'hidden'; 
-                    document.body.style.marginRight = `${scrollWindow}px`;
-                    isOpenModal = true;
+        function openModal(trigger, modal, scrollWindow, exception) {
+            if(exception) {
+                exception.querySelector('.button-order').addEventListener('click', (e) => {
+                    if(document.querySelector('#size').value != '' && document.querySelector('#material').value != '') {
+                        modal.style.display = 'block';
+                        document.body.style.overflow = 'hidden'; 
+                        document.body.style.marginRight = `${scrollWindow}px`;
+                        isOpenModal = true;
+                    }
                 });
-           });
+            } 
+            else {
+                trigger.forEach(item => {
+                     item.addEventListener('click', () => {
+                         modal.style.display = 'block';
+                         document.body.style.overflow = 'hidden'; 
+                         document.body.style.marginRight = `${scrollWindow}px`;
+                         isOpenModal = true;
+                     });
+                });
+            }
         }
     
         function closeModal(closeTrigger, modal, trigger) {
@@ -73,7 +87,7 @@ const modal = () => {
     
         
     
-        openModal(trigger, modal, scrollWindow);
+        openModal(trigger, modal, scrollWindow, exception);
         closeModal(close, modal, trigger);
     }
 
@@ -119,6 +133,7 @@ const modal = () => {
     workModal('.button-design', '.popup-design' , '.popup-design .popup-close');
     workModal('.button-consultation', '.popup-consultation' , '.popup-consultation .popup-close');
     workModal('.fixed-gift', '.popup-gift' , '.popup-gift .popup-close', true, true);
+    workModal('.calc-form .button-order','.popup-design ', '.popup-design  .popup-close', true, false , exception);
     showModalByScroll('.fixed-gift');
 };
 
