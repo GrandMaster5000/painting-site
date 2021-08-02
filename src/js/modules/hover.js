@@ -2,8 +2,7 @@
 
 function workHover(wrapperContentSelector, notHideElemClass) {
     const wrapperContent = document.querySelectorAll(wrapperContentSelector);
-          
-          
+               
     let img,
     src;
 
@@ -14,7 +13,7 @@ function workHover(wrapperContentSelector, notHideElemClass) {
                     img = item;
                     src = img.getAttribute('src');
                 } else if (item.tagName == 'P' && !item.classList.contains(notHideElemClass)) {
-                    item.style.display = 'none';
+                    item.style.visibility = 'hidden';
                 }
             });
     
@@ -28,7 +27,7 @@ function workHover(wrapperContentSelector, notHideElemClass) {
         item.addEventListener('pointerout', () => {
             img.setAttribute('src', `${src}`);
             item.children.forEach(item => {
-                item.style.display = 'block';
+                item.style.visibility = '';
             });
         });
    });

@@ -4,8 +4,6 @@ function workMenu(hambergerSelector, menuSelector) {
     const hamburger = document.querySelector(hambergerSelector),
           menu = document.querySelector(menuSelector);
 
-    
-
     function openMenu(menu) {
          menu.style.display = 'block';
     }

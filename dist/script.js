@@ -16512,10 +16512,7 @@ function workAccordion(triggerSelector, contentSelector, activeTriggerClass, act
   function disableContent(trigger, content) {
     trigger.classList.remove(activeTriggerClass);
     content.classList.remove('animate__fadeIn');
-    content.classList.add('animate__fadeOut');
-    content.addEventListener('animationend', function () {
-      content.style.display = 'none';
-    });
+    content.style.display = 'none';
     content.classList.remove(activeContentClass);
   }
 }
@@ -16780,7 +16777,7 @@ function workHover(wrapperContentSelector, notHideElemClass) {
           img = item;
           src = img.getAttribute('src');
         } else if (item.tagName == 'P' && !item.classList.contains(notHideElemClass)) {
-          item.style.display = 'none';
+          item.style.visibility = 'hidden';
         }
       });
       img.setAttribute('src', "".concat(src.slice(0, src.length - 4), "-1.png"));
@@ -16790,7 +16787,7 @@ function workHover(wrapperContentSelector, notHideElemClass) {
     item.addEventListener('pointerout', function () {
       img.setAttribute('src', "".concat(src));
       item.children.forEach(function (item) {
-        item.style.display = 'block';
+        item.style.visibility = '';
       });
     });
   });

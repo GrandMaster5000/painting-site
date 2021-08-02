@@ -39,10 +39,8 @@ function workAccordion(triggerSelector, contentSelector, activeTriggerClass, act
         trigger.classList.remove(activeTriggerClass);
 
         content.classList.remove('animate__fadeIn');
-        content.classList.add('animate__fadeOut');
-        content.addEventListener('animationend', () => {
-            content.style.display = 'none';
-        });
+        content.style.display = 'none';
+        
         content.classList.remove(activeContentClass);
     }
 }
