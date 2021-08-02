@@ -115,6 +115,11 @@ h4 {
   background-size: 100%;
 }
 
+.main-slider-item {
+  display: flex;
+  justify-content: center;
+}
+
 .pageup {
   opacity: 0;
   width: 26px;
