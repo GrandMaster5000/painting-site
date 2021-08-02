@@ -9,6 +9,7 @@ import Swiper from 'swiper/bundle';
 import WOW from 'wowjs/dist/wow.min';
 import forms from './modules/forms';
 import mask from './modules/mask';
+import checkTextInputs from './modules/checkTextInputs';
 
 
 
@@ -23,6 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
     workMenu('.burger', '.burger-menu');
     forms();
     mask('[name="phone"]');
+    checkTextInputs('[name="name"]');
+    checkTextInputs('[name="message"]');
    
     const mainSwiper = new Swiper( '.main-slider', {
         direction: 'vertical',
