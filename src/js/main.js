@@ -11,6 +11,7 @@ import forms from './modules/forms';
 import mask from './modules/mask';
 import checkTextInputs from './modules/checkTextInputs';
 import calc from './modules/calc';
+import scrolling from './modules/scrolling';
 
 
 
@@ -28,6 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
     checkTextInputs('[name="name"]');
     checkTextInputs('[name="message"]');
     calc('#size', '#material', '#options', '.promocode', '.calc-price');
+    scrolling('.pageup');
    
     const mainSwiper = new Swiper( '.main-slider', {
         direction: 'vertical',
